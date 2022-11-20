@@ -11,10 +11,18 @@
         android:layout_height="wrap_content"
         app:liftOnScroll="true">
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
             app:layout_scrollFlags="enterAlwaysCollapsed|snap|scroll"
-            app:title="Discover"
+            app:title="SnapNews"
+            app:menu="@menu/home_menu"
             android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/category_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/news_category_tabs"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -22,6 +30,7 @@
         android:id="@+id/news_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_6"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 

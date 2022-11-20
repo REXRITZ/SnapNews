@@ -11,6 +11,7 @@ import com.ritesh.snapnews.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -25,20 +26,23 @@ class HomeViewModel @Inject constructor(
     val breakingNews: LiveData<Resource<List<News>>> = _breakingNews
 
     private var country = "us"
-    private var category = ""
+    private var _category = ""
+    val category get() = _category
     private var totalResults: Int = 0
     private var pageNumber: Int = 1
 
     private var job: Job? = null
+    private var searchJob: Job? = null
 
     init {
         getBreakingNews()
     }
 
-    fun getBreakingNews() {
+    private fun getBreakingNews() {
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
             _breakingNews.postValue(Resource.Loading())
+            delay(200) // adding delay in case of rapidly switching between tabs
             try {
                 val response = newsRepository.getBreakingNews(country, pageNumber, category)
                 if (response.isSuccessful) {
@@ -59,13 +63,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun searchNews(query: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
+
+        }
+    }
+
     fun setCategory(value: String) {
-        category = value
+        _category = value
         pageNumber = 1
         getBreakingNews()
     }
 
     fun setCountry(value: String) {
+        if(value == country) return
         country = value
         pageNumber = 1
         getBreakingNews()

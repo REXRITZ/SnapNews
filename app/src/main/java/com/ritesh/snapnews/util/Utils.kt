@@ -1,9 +1,11 @@
 package com.ritesh.snapnews.util
 
+import java.lang.Integer.max
 import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
+
 
     fun getRelativeDateTime(dateTime: String): String {
         val date = parseDate(dateTime)
@@ -20,7 +22,7 @@ object Utils {
             val hr = seconds / 3600
             if(hr == 1L) "$hr hr ago" else "$hr hrs ago"
         } else {
-            getFormattedDate(date, pattern = "dd E")
+            getFormattedDate(date, pattern = "dd EEEE")
         }
         return relativeTime
     }
@@ -29,7 +31,7 @@ object Utils {
         dateTime: String,
     ): String {
         val date = parseDate(dateTime)
-        return getFormattedDate(date, pattern = "dd EEE yyyy, hh:mm aa")
+        return getFormattedDate(date, pattern = "dd EEEE yyyy, hh:mm aa")
     }
 
     fun getFormattedDate(date: Date, pattern: String): String {
@@ -48,7 +50,36 @@ object Utils {
 
     fun calculateReadTime(value: String): String {
         val words = value.split("\\s+".toRegex()).size
-        val readingTimeInMinutes = words / 150      //150 is the average reading time per minute
-        return "$readingTimeInMinutes min"
+        val readingTimeInMinutes = max(words / 150,1)      //150 is the average reading time per minute
+        return "$readingTimeInMinutes min read"
+    }
+
+    fun getNewsCategory(tabPos: Int): String {
+        return when(tabPos) {
+            1 -> {
+                "business"
+            }
+            2 -> {
+                "entertainment"
+            }
+            3 -> {
+                "general"
+            }
+            4 -> {
+                "health"
+            }
+            5 -> {
+                "science"
+            }
+            6 -> {
+                "sports"
+            }
+            7 -> {
+                "technology"
+            }
+            else -> {
+                ""
+            }
+        }
     }
 }

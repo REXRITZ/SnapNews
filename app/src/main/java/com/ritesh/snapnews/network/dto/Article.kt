@@ -26,11 +26,10 @@ data class Article(
     fun toNews() = News(
         title = title,
         description = description,
-        content = content,
         publishAt = publishedAt,
         author = author,
         newsUrl = url,
         imageUrl = urlToImage,
-        readTime = calculateReadTime(description + content + "")
+        readTime = calculateReadTime(title + description + content + "")
     )
 }
