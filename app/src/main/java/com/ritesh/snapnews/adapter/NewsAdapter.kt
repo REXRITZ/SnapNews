@@ -1,0 +1,58 @@
+package com.ritesh.snapnews.adapter
+
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ritesh.snapnews.databinding.NewsItemBinding
+import com.ritesh.snapnews.model.News
+import com.ritesh.snapnews.network.dto.Article
+import com.ritesh.snapnews.util.Utils
+
+class NewsAdapter: ListAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator()) {
+
+    private var onNewsClickListener: ((News) -> Unit)? = null
+
+    fun setOnNewsClickListener(listener: (News) -> Unit) {
+        onNewsClickListener = listener
+    }
+
+    inner class NewsViewHolder(val binding: NewsItemBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun onBind(news: News) {
+            binding.title.text = news.title
+            binding.info.text = "${Utils.getRelativeDateTime(news.publishAt)} ∙ ${news.readTime}"
+            Glide.with(binding.guideline.context)
+                .load(news.imageUrl)
+                .into(binding.thumbnail)
+
+            binding.root.setOnClickListener {
+                onNewsClickListener?.let { it(news) }
+            }
+        }
+    }
+
+    class NewsComparator: DiffUtil.ItemCallback<News>() {
+        override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
+        }
+
+        override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        holder.onBind(getItem(position))
+    }
+}
