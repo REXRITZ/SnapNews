@@ -22,6 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_16"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                 android:background="@android:color/transparent"
                 android:hint="Search anything"
                 android:padding="6dp" />
