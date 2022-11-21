@@ -14,4 +14,10 @@ class NewsRepository(
         category: String): Response<NewsResponse> {
         return api.fetchTrendingNews(country, pageNumber, category)
     }
+
+    suspend fun searchNews(
+        query: String
+    ): Response<NewsResponse> {
+        return api.searchNews(query)
+    }
 }

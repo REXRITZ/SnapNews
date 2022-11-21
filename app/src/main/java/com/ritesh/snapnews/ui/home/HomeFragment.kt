@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.ritesh.snapnews.R
@@ -68,6 +69,7 @@ class HomeFragment : Fragment() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.search -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
                     true
                 }
                 R.id.country -> {

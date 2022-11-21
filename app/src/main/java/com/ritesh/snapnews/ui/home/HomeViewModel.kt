@@ -27,12 +27,10 @@ class HomeViewModel @Inject constructor(
 
     private var country = "us"
     private var _category = ""
-    val category get() = _category
     private var totalResults: Int = 0
     private var pageNumber: Int = 1
 
     private var job: Job? = null
-    private var searchJob: Job? = null
 
     init {
         getBreakingNews()
@@ -44,7 +42,7 @@ class HomeViewModel @Inject constructor(
             _breakingNews.postValue(Resource.Loading())
             delay(200) // adding delay in case of rapidly switching between tabs
             try {
-                val response = newsRepository.getBreakingNews(country, pageNumber, category)
+                val response = newsRepository.getBreakingNews(country, pageNumber, _category)
                 if (response.isSuccessful) {
                     response.body()?.let { newsResponse ->
                         pageNumber++
@@ -60,13 +58,6 @@ class HomeViewModel @Inject constructor(
             } catch (e : IOException) {
                 _breakingNews.postValue(Resource.Error("Couldn't reach server, please check your internet connection!"))
             }
-        }
-    }
-
-    fun searchNews(query: String) {
-        searchJob?.cancel()
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
-
         }
     }
 

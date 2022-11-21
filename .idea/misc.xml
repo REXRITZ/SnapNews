@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/HP/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_2.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/HP/Desktop/Assignments/SnapNews/app/src/main/res/layout/fragment_home.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/HP/Desktop/Assignments/SnapNews/app/src/main/res/layout/fragment_search.xml" value="0.75" />
         <entry key="..\:/Users/HP/Desktop/Assignments/SnapNews/app/src/main/res/layout/news_category_tabs.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/HP/Desktop/Assignments/SnapNews/app/src/main/res/layout/news_item.xml" value="1.5" />
         <entry key="..\:/Users/HP/Desktop/Assignments/SnapNews/app/src/main/res/menu/home_menu.xml" value="0.20260416666666667" />
@@ -23,7 +24,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="1.5" />
+        <option name="scale" value="0.75" />
       </ProjectState>
     </option>
   </component>

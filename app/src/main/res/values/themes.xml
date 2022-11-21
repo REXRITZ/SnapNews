@@ -2,6 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.SnapNews" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
