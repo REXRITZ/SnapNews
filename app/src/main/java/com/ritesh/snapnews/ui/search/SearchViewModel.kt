@@ -35,11 +35,11 @@ class SearchViewModel @Inject constructor(
             _searchNews.postValue(Resource.Loading())
             delay(200) // adding delay to wait for user input completion
             try {
-                val response = newsRepository.searchNews(query)
+                val response = newsRepository.getBreakingNews("",1,"",query)
                 if (response.isSuccessful) {
                     prevQuery = query
                     response.body()?.let { newsResponse ->
-                        val news = newsResponse.articles.map {
+                        val news = newsResponse.results.map {
                             it.toNews()
                         }
                         _searchNews.postValue(Resource.Success(news))

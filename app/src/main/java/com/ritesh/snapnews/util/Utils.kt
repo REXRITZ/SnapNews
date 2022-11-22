@@ -42,7 +42,7 @@ object Utils {
     }
 
     fun parseDate(date: String): Date {
-        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).apply {
+        val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
         return formatter.parse(date)!!
@@ -50,7 +50,8 @@ object Utils {
 
     fun calculateReadTime(value: String): String {
         val words = value.split("\\s+".toRegex()).size
-        val readingTimeInMinutes = max(words / 150,1)      //150 is the average reading time per minute
+        // 150 is taken as the average reading time per minute
+        val readingTimeInMinutes = max(words / 150,1)
         return "$readingTimeInMinutes min read"
     }
 
@@ -63,19 +64,31 @@ object Utils {
                 "entertainment"
             }
             3 -> {
-                "general"
+                "environment"
             }
             4 -> {
-                "health"
+                "food"
             }
             5 -> {
-                "science"
+                "health"
             }
             6 -> {
-                "sports"
+                "politics"
             }
             7 -> {
+                "science"
+            }
+            8 -> {
+                "sports"
+            }
+            9 -> {
                 "technology"
+            }
+            10 -> {
+                "top"
+            }
+            11 -> {
+                "world"
             }
             else -> {
                 ""

@@ -25,10 +25,8 @@ class HomeViewModel @Inject constructor(
     private val _breakingNews: MutableLiveData<Resource<List<News>>> = MutableLiveData()
     val breakingNews: LiveData<Resource<List<News>>> = _breakingNews
 
-    private var country = "us"
+    private var countryCode = "us"      // default country is United States
     private var _category = ""
-    private var totalResults: Int = 0
-    private var pageNumber: Int = 1
 
     private var job: Job? = null
 
@@ -40,14 +38,12 @@ class HomeViewModel @Inject constructor(
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
             _breakingNews.postValue(Resource.Loading())
-            delay(200) // adding delay in case of rapidly switching between tabs
+            delay(200) // adding delay in case of rapidly switching between category tabs
             try {
-                val response = newsRepository.getBreakingNews(country, pageNumber, _category)
+                val response = newsRepository.getBreakingNews(countryCode, 1, _category)
                 if (response.isSuccessful) {
                     response.body()?.let { newsResponse ->
-                        pageNumber++
-                        totalResults = newsResponse.totalResults
-                        val news = newsResponse.articles.map {
+                        val news = newsResponse.results.map {
                             it.toNews()
                         }
                         _breakingNews.postValue(Resource.Success(news))
@@ -63,14 +59,12 @@ class HomeViewModel @Inject constructor(
 
     fun setCategory(value: String) {
         _category = value
-        pageNumber = 1
         getBreakingNews()
     }
 
     fun setCountry(value: String) {
-        if(value == country) return
-        country = value
-        pageNumber = 1
+        if(value == countryCode) return
+        countryCode = value
         getBreakingNews()
     }
 }

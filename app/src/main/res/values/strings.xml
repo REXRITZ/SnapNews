@@ -6,6 +6,7 @@
         <item>Argentina</item>
         <item>Australia</item>
         <item>Austria</item>
+        <item>Belarus</item>
         <item>Belgium</item>
         <item>Brazil</item>
         <item>Bulgaria</item>
@@ -13,7 +14,7 @@
         <item>China</item>
         <item>Colombia</item>
         <item>Cuba</item>
-        <item>Czechia</item>
+        <item>Czech Republic</item>
         <item>France</item>
         <item>Germany</item>
         <item>Greece</item>
@@ -61,6 +62,7 @@
         <item>ar</item>
         <item>au</item>
         <item>at</item>
+        <item>by</item>
         <item>be</item>
         <item>br</item>
         <item>bg</item>
@@ -112,4 +114,6 @@
         <item>ua</item>
         <item>ve</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

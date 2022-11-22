@@ -2,6 +2,7 @@ package com.ritesh.snapnews.di
 
 import com.ritesh.snapnews.network.NewsApi
 import com.ritesh.snapnews.repository.NewsRepository
+import com.ritesh.snapnews.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +18,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideApiInstance() = Retrofit.Builder()
-        .baseUrl("https://newsapi.org/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(NewsApi::class.java)
+    fun provideApiInstance(): NewsApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsApi::class.java)
+    }
 
     @Provides
     @Singleton

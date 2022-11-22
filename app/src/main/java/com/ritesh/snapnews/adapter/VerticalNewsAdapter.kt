@@ -1,37 +1,33 @@
 package com.ritesh.snapnews.adapter
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.ritesh.snapnews.databinding.NewsItemBinding
+import com.ritesh.snapnews.databinding.NewsDetailItemBinding
 import com.ritesh.snapnews.model.News
-import com.ritesh.snapnews.network.dto.Article
-import com.ritesh.snapnews.util.Utils
 
-class NewsAdapter: ListAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator()) {
+class VerticalNewsAdapter:  ListAdapter<News, VerticalNewsAdapter.NewsViewHolder>(NewsComparator()) {
 
-    private var onNewsClickListener: ((Int) -> Unit)? = null
+    private var onDisplayWebViewClickListener: ((String) -> Unit)? = null
 
-    fun setOnNewsClickListener(listener: (Int) -> Unit) {
-        onNewsClickListener = listener
+    fun setDisplayWebViewClickListener(listener: (String) -> Unit) {
+        onDisplayWebViewClickListener = listener
     }
 
-    inner class NewsViewHolder(val binding: NewsItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(val binding: NewsDetailItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(news: News) {
             binding.title.text = news.title
-            binding.info.text = "${Utils.getRelativeDateTime(news.publishAt)} ∙ ${news.readTime}"
+            binding.description.text = news.description
             Glide.with(binding.thumbnail.context)
                 .load(news.imageUrl)
                 .into(binding.thumbnail)
 
-            binding.root.setOnClickListener {
-                onNewsClickListener?.let { it(adapterPosition) }
+            binding.webViewBtn.setOnClickListener { view ->
+                onDisplayWebViewClickListener?.let { it -> it(news.newsUrl) }
             }
         }
     }
@@ -47,12 +43,13 @@ class NewsAdapter: ListAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalNewsAdapter.NewsViewHolder {
+        val binding = NewsDetailItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
+
 }
