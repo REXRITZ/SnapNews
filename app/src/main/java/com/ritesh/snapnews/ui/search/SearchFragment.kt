@@ -1,16 +1,21 @@
 package com.ritesh.snapnews.ui.search
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ritesh.snapnews.R
 import com.ritesh.snapnews.adapter.NewsAdapter
 import com.ritesh.snapnews.databinding.FragmentSearchBinding
+import com.ritesh.snapnews.model.NewsDetailArg
+import com.ritesh.snapnews.ui.home.HomeFragmentDirections
 import com.ritesh.snapnews.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +43,10 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchInput.requestFocus()
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+
         viewModel.searchNews.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Error -> {
@@ -55,11 +64,23 @@ class SearchFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-
         binding.searchInput.addTextChangedListener { editable ->
             editable?.let {
                 viewModel.searchNews(it.toString())
             }
+        }
+
+        adapter.setOnNewsClickListener { pos ->
+            val dir = SearchFragmentDirections.actionSearchFragmentToNewsDetailFragment(
+                NewsDetailArg(
+                    data = viewModel.searchNews.value!!.data!!,
+                    scrollPosition = pos,
+                    searchMode = true,
+                    query = viewModel.query,
+                    totalResults = viewModel.totalResults
+                )
+            )
+            findNavController().navigate(dir)
         }
     }
 

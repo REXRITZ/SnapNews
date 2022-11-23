@@ -25,8 +25,12 @@ class HomeViewModel @Inject constructor(
     private val _breakingNews: MutableLiveData<Resource<List<News>>> = MutableLiveData()
     val breakingNews: LiveData<Resource<List<News>>> = _breakingNews
 
-    private var countryCode = "us"      // default country is United States
+    private var _countryCode = "us"
+    val countryCode get() = _countryCode
     private var _category = ""
+    val category get() = _category
+    private var _totalResults = 0
+    val totalResults get() = _totalResults
 
     private var job: Job? = null
 
@@ -43,6 +47,7 @@ class HomeViewModel @Inject constructor(
                 val response = newsRepository.getBreakingNews(countryCode, 1, _category)
                 if (response.isSuccessful) {
                     response.body()?.let { newsResponse ->
+                        _totalResults = newsResponse.totalResults
                         val news = newsResponse.results.map {
                             it.toNews()
                         }
@@ -64,7 +69,7 @@ class HomeViewModel @Inject constructor(
 
     fun setCountry(value: String) {
         if(value == countryCode) return
-        countryCode = value
+        _countryCode = value
         getBreakingNews()
     }
 }

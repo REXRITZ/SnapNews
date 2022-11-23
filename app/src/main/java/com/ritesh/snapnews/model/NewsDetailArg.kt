@@ -10,4 +10,10 @@ import kotlinx.parcelize.RawValue
 data class NewsDetailArg(
     val data: List<News>,
     val scrollPosition: Int = 0,
-) : Parcelable
+    val searchMode: Boolean,
+    val query: String = "",
+    val countryCode: String = "",
+    val category: String = "",
+    val totalResults: Int
+) : Parcelable {
+}

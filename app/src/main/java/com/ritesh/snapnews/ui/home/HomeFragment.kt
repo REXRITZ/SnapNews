@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.ritesh.snapnews.R
 import com.ritesh.snapnews.adapter.NewsAdapter
 import com.ritesh.snapnews.databinding.FragmentHomeBinding
+import com.ritesh.snapnews.model.NewsDetailArg
 import com.ritesh.snapnews.util.Resource
 import com.ritesh.snapnews.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,8 +58,18 @@ class HomeFragment : Fragment() {
             }
         }
 
-        adapter.setOnNewsClickListener { news ->
-            //do something here
+        adapter.setOnNewsClickListener { pos ->
+            val dir = HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(
+                NewsDetailArg(
+                    data = viewModel.breakingNews.value!!.data!!,
+                    scrollPosition = pos,
+                    searchMode = false,
+                    countryCode = viewModel.countryCode,
+                    category = viewModel.category,
+                    totalResults = viewModel.totalResults
+                )
+            )
+            findNavController().navigate(dir)
         }
 
         tabSelectListener()

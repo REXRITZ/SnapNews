@@ -2,6 +2,7 @@ package com.ritesh.snapnews.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,7 @@ class VerticalNewsAdapter:  ListAdapter<News, VerticalNewsAdapter.NewsViewHolder
 
     class NewsComparator: DiffUtil.ItemCallback<News>() {
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {

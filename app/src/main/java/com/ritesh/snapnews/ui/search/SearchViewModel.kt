@@ -27,6 +27,9 @@ class SearchViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     private var prevQuery: String = ""
+    val query get() = prevQuery
+    private var _totalResults = 0
+    val totalResults get() = _totalResults
 
     fun searchNews(query: String) {
         if(query.trim().isEmpty() || query == prevQuery) return
@@ -37,8 +40,9 @@ class SearchViewModel @Inject constructor(
             try {
                 val response = newsRepository.getBreakingNews("",1,"",query)
                 if (response.isSuccessful) {
-                    prevQuery = query
                     response.body()?.let { newsResponse ->
+                        prevQuery = query
+                        _totalResults = newsResponse.totalResults
                         val news = newsResponse.results.map {
                             it.toNews()
                         }
