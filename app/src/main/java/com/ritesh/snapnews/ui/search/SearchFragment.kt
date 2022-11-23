@@ -1,21 +1,20 @@
 package com.ritesh.snapnews.ui.search
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ritesh.snapnews.R
-import com.ritesh.snapnews.adapter.NewsAdapter
+import com.google.android.material.transition.MaterialSharedAxis
+import com.ritesh.snapnews.adapters.NewsAdapter
 import com.ritesh.snapnews.databinding.FragmentSearchBinding
 import com.ritesh.snapnews.model.NewsDetailArg
-import com.ritesh.snapnews.ui.home.HomeFragmentDirections
 import com.ritesh.snapnews.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,8 +25,13 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = NewsAdapter()
-
     private val viewModel: SearchViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,17 +54,23 @@ class SearchFragment : Fragment() {
         viewModel.searchNews.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Error -> {
-
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
+                    binding.loading.visibility = View.GONE
                 }
                 is Resource.Loading -> {
+                    binding.loading.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
                     adapter.submitList(response.data)
+                    binding.loading.visibility = View.GONE
                 }
             }
         }
 
         binding.searchToolbar.setNavigationOnClickListener {
+            //hide keyboard
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(requireActivity().window.currentFocus?.windowToken,0)
             requireActivity().onBackPressed()
         }
 

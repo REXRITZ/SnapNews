@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ritesh.snapnews.model.News
 import com.ritesh.snapnews.network.dto.NewsResponse
 import com.ritesh.snapnews.repository.NewsRepository
+import com.ritesh.snapnews.util.Constants.Companion.DELAY
 import com.ritesh.snapnews.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +43,7 @@ class HomeViewModel @Inject constructor(
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
             _breakingNews.postValue(Resource.Loading())
-            delay(200) // adding delay in case of rapidly switching between category tabs
+            delay(DELAY) // adding delay in case of rapidly switching between category tabs
             try {
                 val response = newsRepository.getBreakingNews(countryCode, 1, _category)
                 if (response.isSuccessful) {

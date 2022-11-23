@@ -1,16 +1,15 @@
-package com.ritesh.snapnews.adapter
+package com.ritesh.snapnews.adapters
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.card.MaterialCardView
+import com.ritesh.snapnews.R
 import com.ritesh.snapnews.databinding.NewsItemBinding
 import com.ritesh.snapnews.model.News
-import com.ritesh.snapnews.network.dto.Article
 import com.ritesh.snapnews.util.Utils
 
 class NewsAdapter: ListAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator()) {

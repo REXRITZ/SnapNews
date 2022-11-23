@@ -1,17 +1,23 @@
 package com.ritesh.snapnews.ui.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.ritesh.snapnews.R
-import com.ritesh.snapnews.adapter.NewsAdapter
+import com.ritesh.snapnews.adapters.NewsAdapter
 import com.ritesh.snapnews.databinding.FragmentHomeBinding
 import com.ritesh.snapnews.model.NewsDetailArg
 import com.ritesh.snapnews.util.Resource
@@ -30,6 +36,12 @@ class HomeFragment : Fragment() {
     val adapter: NewsAdapter = NewsAdapter()
     private val viewModel: HomeViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,16 +56,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
         viewModel.breakingNews.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Error -> {
-
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
+                    binding.loading.visibility = View.GONE
                 }
                 is Resource.Loading -> {
                     adapter.submitList(response.data)
+                    binding.loading.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
                     adapter.submitList(response.data)
+                    binding.loading.visibility = View.GONE
                 }
             }
         }

@@ -1,20 +1,23 @@
 package com.ritesh.snapnews.ui.detail
 
-import androidx.lifecycle.ViewModelProvider
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.SharedElementCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import com.ritesh.snapnews.R
-import com.ritesh.snapnews.adapter.VerticalNewsAdapter
+import com.ritesh.snapnews.adapters.VerticalNewsAdapter
 import com.ritesh.snapnews.databinding.FragmentNewsDetailBinding
 import com.ritesh.snapnews.util.Constants.Companion.PAGE_SIZE
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +64,13 @@ class NewsDetailFragment : Fragment() {
                 isLoading = true
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
     }
 
     override fun onCreateView(

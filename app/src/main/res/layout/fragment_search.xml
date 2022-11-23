@@ -29,6 +29,13 @@
                 android:padding="6dp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            android:layout_gravity="center"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -39,5 +46,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_marginTop="@dimen/dimen_6"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

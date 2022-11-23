@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesh.snapnews.model.News
 import com.ritesh.snapnews.repository.NewsRepository
+import com.ritesh.snapnews.util.Constants.Companion.DELAY
 import com.ritesh.snapnews.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +37,7 @@ class SearchViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             _searchNews.postValue(Resource.Loading())
-            delay(200) // adding delay to wait for user input completion
+            delay(DELAY) // adding delay to wait for user input completion
             try {
                 val response = newsRepository.getBreakingNews("",1,"",query)
                 if (response.isSuccessful) {

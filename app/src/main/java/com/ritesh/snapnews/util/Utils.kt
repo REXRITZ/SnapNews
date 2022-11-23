@@ -9,9 +9,7 @@ object Utils {
 
     fun getRelativeDateTime(dateTime: String): String {
         val date = parseDate(dateTime)
-        val calendar = Calendar.getInstance(TimeZone.getDefault())
-        calendar.timeInMillis = System.currentTimeMillis()
-        val seconds = calendar.timeInMillis - date.time
+        val seconds = (System.currentTimeMillis() - date.time) / 1000
         val relativeTime =
         if(seconds < 60) {
             if (seconds == 1L) "$seconds sec ago" else "$seconds secs ago"
@@ -27,21 +25,14 @@ object Utils {
         return relativeTime
     }
 
-    fun getDateTime(
-        dateTime: String,
-    ): String {
-        val date = parseDate(dateTime)
-        return getFormattedDate(date, pattern = "dd EEEE yyyy, hh:mm aa")
-    }
-
-    fun getFormattedDate(date: Date, pattern: String): String {
+    private fun getFormattedDate(date: Date, pattern: String): String {
         val formatter = SimpleDateFormat(pattern, Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
         return formatter.format(date)
     }
 
-    fun parseDate(date: String): Date {
+    private fun parseDate(date: String): Date {
         val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
