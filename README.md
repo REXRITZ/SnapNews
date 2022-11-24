@@ -7,7 +7,7 @@ A short news android app that shows trending news with different category option
 
 ### App
 
-#### ui
+#### UI
 The app consists of a single activity with multiple fragments using MVVM architecture-  
 
 - Home Fragment  
@@ -25,7 +25,12 @@ The app consists of a single activity with multiple fragments using MVVM archite
 - **Network**  
   Retrofit, Gson(serialize / deserialize)
 
-
+#### App screenshots
+<table>
+  <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page1.png" width="220" /> </td>
+  <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page2.png" width="220" /> </td>
+  <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page3.png" width="220" /> </td>
+</table>
 
 
 
