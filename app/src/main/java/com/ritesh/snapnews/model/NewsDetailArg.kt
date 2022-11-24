@@ -15,5 +15,4 @@ data class NewsDetailArg(
     val countryCode: String = "",
     val category: String = "",
     val totalResults: Int
-) : Parcelable {
-}
+) : Parcelable

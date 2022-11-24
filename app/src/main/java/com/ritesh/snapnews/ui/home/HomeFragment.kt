@@ -20,6 +20,7 @@ import com.ritesh.snapnews.R
 import com.ritesh.snapnews.adapters.NewsAdapter
 import com.ritesh.snapnews.databinding.FragmentHomeBinding
 import com.ritesh.snapnews.model.NewsDetailArg
+import com.ritesh.snapnews.util.Constants.Companion.CATEGORY_POS
 import com.ritesh.snapnews.util.Resource
 import com.ritesh.snapnews.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,11 +37,7 @@ class HomeFragment : Fragment() {
     val adapter: NewsAdapter = NewsAdapter()
     private val viewModel: HomeViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
-    }
+    private var tabPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +46,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater)
 
         binding.newsView.adapter = adapter
+        binding.categoryTab.root.getTabAt(tabPosition)?.select()
 
         return binding.root
     }
@@ -56,8 +54,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
         viewModel.breakingNews.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Error -> {
@@ -97,6 +93,8 @@ class HomeFragment : Fragment() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.search -> {
+                    exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
+                    reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
                     findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
                     true
                 }
@@ -126,6 +124,7 @@ class HomeFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val selectedCategory = Utils.getNewsCategory(tab.position)
                 viewModel.setCategory(selectedCategory)
+                tabPosition = tab.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
