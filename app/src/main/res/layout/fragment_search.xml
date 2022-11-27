@@ -47,5 +47,14 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_marginTop="@dimen/dimen_6"/>
 
+    <include
+        android:id="@+id/message_layout"
+        layout="@layout/message"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

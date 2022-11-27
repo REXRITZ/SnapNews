@@ -178,4 +178,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_transition">search_transition</string>
     <string name="news_detail_transition">news_detail_transition</string>
+    <string name="search_empty_title">No Results Found</string>
+    <string name="empty_search_subtitle">We can\'t find any item matching your search</string>
+    <string name="network_subtitle">Make sure wifi or cellular data is turned on and then try again</string>
 </resources>

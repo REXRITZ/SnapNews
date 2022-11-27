@@ -42,5 +42,15 @@
         android:indeterminate="true"
         android:layout_gravity="center"/>
 
+    <include
+        android:id="@+id/message_layout"
+        layout="@layout/message"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
