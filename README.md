@@ -5,9 +5,9 @@ A short news android app that shows trending news with different category option
 
 
 
-### App
+## App
 
-#### UI
+### UI
 The app consists of a single activity with multiple fragments using MVVM architecture-  
 
 - Home Fragment  
@@ -17,7 +17,7 @@ The app consists of a single activity with multiple fragments using MVVM archite
 - News Detail Fragment  
   This view contains news in detail
 
-#### Libraries used
+### Libraries used
 
 - **Android Jetpack**  
   RecyclerView, Navigation-UI, Material Design, Lifecycle components
@@ -25,12 +25,44 @@ The app consists of a single activity with multiple fragments using MVVM archite
 - **Network**  
   Retrofit, Gson(serialize / deserialize)
 
-#### App screenshots
+### App screenshots
 <table>
   <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page1.png" width="220" /> </td>
   <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page2.png" width="220" /> </td>
   <td><img src="https://github.com/REXRITZ/SnapNews/blob/main/app%20ss/page3.png" width="220" /> </td>
 </table>
 
+### Api Info
+The news data api used here is [newsdata.io](https://newsdata.io/docs)
 
+#### Get latest news by category and country
+
+```
+  GET api/1/news
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `apikey` | `string` | **Required**. Your API key |
+| `country` | `string` | country code |
+| `category` | `string` | news category |
+| `page` | `integer` | page number |
+
+#### Search news
+
+```
+  GET api/1/news
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `apikey` | `string` | **Required**. Your API key |
+| `q` | `string` | query to search for |
+| `page` | `integer` | page number |
+
+#### Add API Key
+Add the following line in your project's root directory, inside the `local.properties` file (create one if unavailable) include the following line:
+```
+KEY="your api key"
+```
 
