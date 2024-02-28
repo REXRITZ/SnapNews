@@ -64,8 +64,3 @@ Add the following line in your project's root directory, inside the `local.prope
 KEY="your api key"
 ```
 
-## Connect with me
-Hey! I am currently looking for a full-time role as a SDE / App Developer. If you like my project and have a work opportunity available, then do connect with me.    
-email: rmbhadane33@gmail.com    
-LinkedIn: https://www.linkedin.com/in/riteshbhadane/
-
